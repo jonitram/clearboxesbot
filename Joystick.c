@@ -182,6 +182,10 @@ void take_action(action_t action, USB_JoystickReport_Input_t* const ReportData) 
 			ReportData->Button |= SWITCH_Y;
 			break;
 
+		case press_r:
+			ReportData->Button |= SWITCH_R;
+			break;
+
 		case hang:
 			reset_report(ReportData);
 			break;

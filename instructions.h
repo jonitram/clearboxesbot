@@ -16,6 +16,7 @@ typedef enum {
     press_b,
     press_x,
     press_y,
+    press_r,
     hang
 } action_t;
 
@@ -29,8 +30,6 @@ static const command_t wake_up_hang[] = {
 };
 
 static const command_t clear_box_steps[] = {
-    { hang, 10 },
-    { press_a, 5 },
     { hang, 10 },
     { press_x, 7},
     { hang, 40 },
@@ -49,7 +48,9 @@ static const command_t clear_box_steps[] = {
 
 static const command_t open_boxes_steps[] = {
     { hang, 10 },
-    { press_a, 5 }
+    { press_x, 7},
+    { hang, 40 },
+    { press_a, 5 },
 };
 
 static const command_t next_box_steps[] = {
