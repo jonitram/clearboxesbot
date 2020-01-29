@@ -201,7 +201,9 @@ typedef enum {
 	SYNC_CONTROLLER,
 	BREATHE,
 	OPEN_BOXES,
-	CLEAR_BOX,
+	CLEAR_ROW,
+	RESET_CURSOR,
+	MOVE_DOWN,
 	NEXT_BOX,
 	DONE
 } State_t;
@@ -215,10 +217,14 @@ USB_JoystickReport_Input_t last_report;
 int duration_count = 0;
 int bufindex = 0;
 int portsval = 0;
-int boxes_cleared = 0;
-int total_number_of_boxes = 0; // CHANGE THIS VALUE FOR THE TOTAL NUMBER OF BOXES TO CLEAR
+int total_cleared = 0;
+int current_row = 0;
 
-static inline void do_steps(const command_t* steps, uint16_t steps_size, USB_JoystickReport_Input_t* const ReportData, State_t nextState, int box_cleared) {
+
+static inline void do_steps(const command_t* steps, uint16_t steps_size, USB_JoystickReport_Input_t* const ReportData, State_t nextState) {
+	if (total_cleared >= total_boxes) {
+		return;
+	}
 	take_action(steps[bufindex].action, ReportData);
 	duration_count ++;
 	
@@ -232,15 +238,20 @@ static inline void do_steps(const command_t* steps, uint16_t steps_size, USB_Joy
 	{
 		bufindex = 0;
 		duration_count = 0;
-		if (box_cleared) {
-			boxes_cleared ++;
-			if (boxes_cleared >= total_number_of_boxes) {
-				state = DONE;
-				reset_report(ReportData);
+		if (state == CLEAR_ROW) {
+			current_row++;
+			if (current_row == 5) {
+				total_cleared++;
+				current_row = 0;
+				state = NEXT_BOX;
+			}
+			else {
+				state = nextState;
 			}
 		}
-
-		state = nextState;
+		else {
+			state = nextState;
+		}
 		reset_report(ReportData);
 	}
 }
@@ -269,19 +280,27 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 			break;
 		
 		case BREATHE:
-			do_steps(wake_up_hang, ARRAY_SIZE(wake_up_hang), ReportData, OPEN_BOXES, 0);
+			do_steps(wake_up_hang, ARRAY_SIZE(wake_up_hang), ReportData, OPEN_BOXES);
 			break;
 		
 		case OPEN_BOXES:
-			do_steps(open_boxes_steps, ARRAY_SIZE(open_boxes_steps), ReportData, CLEAR_BOX, 0);
+			do_steps(open_boxes_steps, ARRAY_SIZE(open_boxes_steps), ReportData, CLEAR_ROW);
 			break;
 		
-		case CLEAR_BOX:
-			do_steps(clear_box_steps, ARRAY_SIZE(clear_box_steps), ReportData, NEXT_BOX, 0);
+		case CLEAR_ROW:
+			do_steps(clear_row_steps, ARRAY_SIZE(clear_row_steps), ReportData, RESET_CURSOR);
 			break;
 
+		case RESET_CURSOR:
+			do_steps(reset_cursor_steps, ARRAY_SIZE(reset_cursor_steps), ReportData, MOVE_DOWN);
+			break;
+		
+		case MOVE_DOWN:
+			do_steps(move_down_steps, ARRAY_SIZE(move_down_steps), ReportData, CLEAR_ROW);
+			break;
+		
 		case NEXT_BOX:
-			do_steps(next_box_steps, ARRAY_SIZE(next_box_steps), ReportData, CLEAR_BOX, 1);
+			do_steps(next_box_steps, ARRAY_SIZE(next_box_steps), ReportData, CLEAR_ROW);
 			break;
 
 		case DONE:
