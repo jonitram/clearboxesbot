@@ -15,7 +15,7 @@ As long as the in-game preconditions are met before plugging in the device, plug
 ## Setting up the Arduino
 
 - Disclaimer: These instructions were written for Mac OSX in the context of an Arduino with an atmega16u2 chip
-- Change the `total_number_of_boxes` variable to the number of boxes you would like cleared in `Joystick.c` before making and flashing `Joystick.hex` to the Arduino
+- Change the `total_boxes` variable to the number of boxes you would like cleared at the top of `instructions.h` before making and flashing `Joystick.hex` to the Arduino
 
 ### Dependencies and Compiling
 
