@@ -28,7 +28,7 @@ typedef struct {
 } command_t;
 
 static const command_t wake_up_hang[] = {
-    { hang, 50 }
+    { hang, 100 }
 };
 
 static const command_t open_boxes_steps[] = {
