@@ -44,8 +44,9 @@ static const command_t open_boxes_steps[] = {
 };
 
 static const command_t clear_row_steps[] = {
-    
+
     { hang, 30 },
+    // this ^ hang could be decreased
     // release a single pokemon
     { press_a, 5 },
     { hang, 10 },
