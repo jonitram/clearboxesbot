@@ -10,7 +10,7 @@ As long as the in-game preconditions are met before plugging in the device, plug
 - You are in a location where you can access the PC Box Link
 - Ensure that when you hit "X" the cursor is on the "Pokemon" icon
 - Ensure that when you activate the PC Box Link from your party, the box it opens up to is the first box you are looking to clear and any subsequent boxes you would like to clear are to the right of it
-- Ensure that the number of boxes you have specified to delete are completely filled with pokemon
+- Ensure that the number of boxes you have specified to delete are completely filled with pokemon (without any eggs)
 
 ## Setting up the Arduino
 

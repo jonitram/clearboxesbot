@@ -7,7 +7,7 @@
     #define ARRAY_SIZE(x) (sizeof((x)) / sizeof((x)[0]))
 #endif
 
-static const uint16_t total_boxes = 2; // change this value to alter how many boxes are deleted
+static const uint16_t total_boxes = 4; // change this value to alter how many boxes are deleted
 
 typedef enum {
     move_up,
