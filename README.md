@@ -1,6 +1,6 @@
 # Pokemon Box Clearing Bot
 
-As long as the in-game preconditions are met before plugging in the device, plugging the Arduino directly into the switch through a USB Type B to USB Type C Cable should enable the bot to start deleting entire boxes of pokemon moving right depending on the number of boxes specified
+As long as the in-game preconditions are met before plugging in the device, plugging the Arduino directly into the switch through a USB Type B to USB Type C cable should enable the bot to start deleting entire boxes of pokemon moving right depending on the number of boxes specified
 
 ## In-Game Information
 
